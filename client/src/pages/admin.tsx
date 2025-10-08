@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useWarning } from "@/lib/warningContext";
 import { useLocation } from "wouter";
 import type { MenuItem, InsertMenuItem, Category, InsertCategory } from "@shared/schema";
 import {
@@ -32,6 +33,7 @@ export default function AdminPage() {
   const [editingCategory, setEditingCategory] = useState<EditingCategory | null>(null);
   const [isAddingNewCategory, setIsAddingNewCategory] = useState(false);
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const { setShowTrialWarning } = useWarning();
   const [newCategory, setNewCategory] = useState<InsertCategory>({
     name: "",
     subCategories: [],
@@ -386,11 +388,28 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen thick-red-black-gradient px-4 py-6 sm:px-6 lg:px-8">
+
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
           <div className="space-y-1">
             <h1 className="text-2xl sm:text-3xl font-bold text-secondary">Admin Panel</h1>
             <p className="text-sm sm:text-base text-muted-foreground">Manage menu items and operations</p>
+            <div className="flex space-x-4 mt-4">
+              <Button
+                onClick={() => setShowTrialWarning(true)}
+                variant="outline"
+                className="bg-green-600 text-white hover:bg-green-700"
+              >
+                Send Warning
+              </Button>
+              <Button
+                onClick={() => setShowTrialWarning(false)}
+                variant="outline"
+                className="bg-red-600 text-white hover:bg-red-700"
+              >
+                Not Send
+              </Button>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-3">
             <Button
@@ -704,46 +723,14 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="new-image">Image</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="new-image"
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          const formData = new FormData();
-                          formData.append("image", file);
-                          try {
-                            const response = await apiRequest("POST", "/api/upload", formData, true);
-                            if (response.ok) {
-                              const data = await response.json();
-                              setNewItem({ ...newItem, image: data.url });
-                              toast({
-                                title: "Success",
-                                description: "Image uploaded successfully",
-                              });
-                            }
-                          } catch (error) {
-                            toast({
-                              title: "Error",
-                              description: "Failed to upload image",
-                              variant: "destructive",
-                            });
-                          }
-                        }
-                      }}
-                      className="h-11"
-                    />
-                    {newItem.image && (
-                      <img
-                        src={newItem.image}
-                        alt="Preview"
-                        className="h-11 w-11 object-cover rounded"
-                      />
-                    )}
-                  </div>
+                  <Label htmlFor="new-image">Image URL</Label>
+                  <Input
+                    id="new-image"
+                    value={newItem.image}
+                    onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                    placeholder="Enter image URL"
+                    className="h-11"
+                  />
                 </div>
                 <div className="md:col-span-2 space-y-2">
                   <Label htmlFor="new-description">Description</Label>
@@ -861,36 +848,14 @@ export default function AdminPage() {
                         />
                       </td>
                       <td className="p-2">
-                        {editingItem?.id === item.id ? (
-                          <div className="flex items-center gap-2">
-                            <Input
-                              type="text"
-                              placeholder="Enter image URL"
-                              value={editingItem.image || ''}
-                              onChange={(e) => setEditingItem({ ...editingItem, image: e.target.value })}
-                              className="w-32"
-                            />
-                            {editingItem.image && (
-                              <img
-                                src={editingItem.image}
-                                alt="Preview"
-                                className="h-12 w-12 object-cover rounded"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
-                                }}
-                              />
-                            )}
-                          </div>
-                        ) : (
-                          <img
-                            src={item.image || 'https://via.placeholder.com/100x100?text=No+Image'}
-                            alt={item.name || 'Menu item'}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
-                            }}
-                            className="w-12 h-12 object-cover rounded"
-                          />
-                        )}
+                        <img
+                          src={item.image || 'https://via.placeholder.com/100x100?text=No+Image'}
+                          alt={item.name || 'Menu item'}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
+                          }}
+                          className="w-12 h-12 object-cover rounded"
+                        />
                       </td>
                       <td className="p-2">
                         {editingItem?.id === item.id ? (

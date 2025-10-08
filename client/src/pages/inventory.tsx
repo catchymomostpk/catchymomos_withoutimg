@@ -39,9 +39,7 @@ export default function InventoryPage() {
   // Fetch menu items
   const { data: menuItems = [] } = useQuery<MenuItem[]>({
     queryKey: ["/api/menu"],
-    refetchOnMount: true,
-    staleTime: 30000, // Consider data fresh for 30 seconds
-    cacheTime: 5 * 60 * 1000, // Cache for 5 minutes
+    refetchOnMount: true, // Always refetch when component mounts
   });
 
   // Fetch current inventory session
@@ -67,9 +65,8 @@ export default function InventoryPage() {
       return response.json();
     },
     enabled: !!currentSession?.id,
-    refetchInterval: currentSession?.status === 'billing' ? 1000 : false, // Auto-refresh every 1 second when billing is active
+    refetchInterval: currentSession?.status === 'billing' ? 10000 : false, // Auto-refresh every 10 seconds when billing is active (reduced frequency)
     refetchOnMount: true,
-    staleTime: 1000, // Consider data fresh for 1 second
   });
 
   // Initialize stock inputs from inventory items
@@ -228,22 +225,11 @@ export default function InventoryPage() {
   };
 
   const handleRefresh = async () => {
-    // Show loading state in the refresh button
-    const refreshBtn = document.querySelector('[data-refresh-button]');
-    if (refreshBtn) {
-      refreshBtn.setAttribute('disabled', 'true');
-      refreshBtn.querySelector('.refresh-text')?.classList.add('opacity-0');
-      refreshBtn.querySelector('.refresh-icon')?.classList.add('animate-spin');
-    }
-
     try {
-      // Batch refetch requests
       await Promise.all([
         refetchSession(),
-        refetchItems(),
-        queryClient.invalidateQueries({ queryKey: ["/api/menu"] })
+        refetchItems()
       ]);
-
       toast({
         title: "Refreshed",
         description: "Inventory data has been refreshed successfully.",
@@ -254,13 +240,6 @@ export default function InventoryPage() {
         description: "Failed to refresh inventory data.",
         variant: "destructive",
       });
-    } finally {
-      // Reset refresh button state
-      if (refreshBtn) {
-        refreshBtn.removeAttribute('disabled');
-        refreshBtn.querySelector('.refresh-text')?.classList.remove('opacity-0');
-        refreshBtn.querySelector('.refresh-icon')?.classList.remove('animate-spin');
-      }
     }
   };
 
@@ -405,12 +384,11 @@ export default function InventoryPage() {
                     onClick={handleRefresh}
                     variant="outline"
                     size="sm"
-                    className="flex-1 bg-white text-blue-600 hover:bg-blue-50 border-blue-300 sm:flex-none text-xs sm:text-sm px-2 sm:px-3 relative"
+                    className="flex-1 bg-white text-blue-600 hover:bg-blue-50 border-blue-300 sm:flex-none text-xs sm:text-sm px-2 sm:px-3"
                     disabled={isLoadingSession || isLoadingItems}
-                    data-refresh-button
                   >
-                    <RefreshCw className="mr-1 sm:mr-2 refresh-icon transition-transform" size={14} />
-                    <span className="hidden xs:inline refresh-text transition-opacity duration-200">Refresh</span>
+                    <RefreshCw className="mr-1 sm:mr-2" size={14} />
+                    <span className="hidden xs:inline">Refresh</span>
                   </Button>
                   <Button
                     onClick={handleGoToMenu}
@@ -603,32 +581,11 @@ export default function InventoryPage() {
                 </TableHeader>
                 <TableBody>
                   {isLoadingSession || (isLoadingItems && currentSession?.id) ? (
-                    // Loading placeholder rows
-                    Array(3).fill(0).map((_, i) => (
-                      <TableRow key={`loading-${i}`} className="animate-pulse">
-                        <TableCell>
-                          <div className="h-4 w-32 bg-gray-200 rounded"></div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="h-4 w-20 bg-gray-200 rounded"></div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="h-4 w-8 bg-gray-200 rounded mx-auto"></div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="h-4 w-8 bg-gray-200 rounded mx-auto"></div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="h-4 w-8 bg-gray-200 rounded mx-auto"></div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="h-4 w-16 bg-gray-200 rounded ml-auto"></div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          <div className="h-8 w-8 bg-gray-200 rounded mx-auto"></div>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    <TableRow>
+                      <TableCell colSpan={7} className="py-8 text-center text-muted-foreground">
+                        Loading inventory data...
+                      </TableCell>
+                    </TableRow>
                   ) : (
                     inventoryRows.map(({ item, stockIn, stockOut, stockLeft, revenue }) => (
                       <TableRow key={item.id}>
@@ -742,28 +699,11 @@ export default function InventoryPage() {
 
               <div className="grid gap-2 p-2 lg:hidden">
                 {isLoadingSession || (isLoadingItems && currentSession?.id) ? (
-                  // Mobile loading placeholders
-                  Array(3).fill(0).map((_, i) => (
-                    <Card key={`loading-mobile-${i}`} className="bg-white shadow-sm animate-pulse">
-                      <CardContent className="space-y-2 p-3">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <div className="h-4 w-32 bg-gray-200 rounded mb-2"></div>
-                            <div className="h-4 w-20 bg-gray-200 rounded"></div>
-                          </div>
-                          <div className="h-4 w-16 bg-gray-200 rounded"></div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-1.5">
-                          {Array(3).fill(0).map((_, j) => (
-                            <div key={j} className="rounded border bg-gray-50 p-1.5 text-center">
-                              <div className="h-3 w-8 bg-gray-200 rounded mx-auto mb-1"></div>
-                              <div className="h-4 w-12 bg-gray-200 rounded mx-auto"></div>
-                            </div>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
+                  <Card>
+                    <CardContent className="py-4 text-center text-muted-foreground text-sm">
+                      Loading inventory data...
+                    </CardContent>
+                  </Card>
                 ) : (
                   inventoryRows.map(({ item, stockIn, stockOut, stockLeft, revenue }) => (
                     <Card key={item.id} className="bg-white shadow-sm">

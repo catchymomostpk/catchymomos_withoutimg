@@ -948,7 +948,7 @@ export default function DashboardPage() {
                       variant="outline"
                       size="sm"
                       onClick={goToPreviousWeek}
-                      className="px-2 hover:bg-red-50 hover:border-red-300"
+                      className="px-2 hover:bg-orange-50 hover:border-orange-300"
                       title="Previous Week"
                     >
                       <ChevronLeft className="h-4 w-4" />
@@ -959,15 +959,15 @@ export default function DashboardPage() {
                           variant="outline"
                           className={`flex-1 sm:w-auto justify-start text-left font-normal transition-all ${
                             selectedWeekDate
-                              ? "bg-red-50 border-red-300 hover:bg-red-100 text-red-900 shadow-sm"
+                              ? "bg-orange-50 border-orange-300 hover:bg-orange-100 text-orange-900 shadow-sm"
                               : "hover:bg-accent"
                           }`}
                         >
-                          <CalendarIcon className={`mr-2 h-4 w-4 ${selectedWeekDate ? "text-red-600" : ""}`} />
+                          <CalendarIcon className={`mr-2 h-4 w-4 ${selectedWeekDate ? "text-orange-600" : ""}`} />
                           {selectedWeekDate ? (
                             <span className="flex flex-col sm:flex-row sm:items-center sm:gap-1">
-                              <span className="font-semibold text-red-900">Week {getWeek(selectedWeekDate, { weekStartsOn: 1 })}</span>
-                              <span className="text-xs text-red-700">
+                              <span className="font-semibold text-orange-900">Week {getWeek(selectedWeekDate, { weekStartsOn: 1 })}</span>
+                              <span className="text-xs text-orange-700">
                                 ({format(startOfWeek(selectedWeekDate, { weekStartsOn: 1 }), 'MMM dd')} - {format(endOfWeek(selectedWeekDate, { weekStartsOn: 1 }), 'MMM dd, yyyy')})
                               </span>
                             </span>
@@ -977,14 +977,14 @@ export default function DashboardPage() {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="end">
-                        <div className="p-3 border-b bg-gradient-to-r from-red-50 to-red-100">
-                          <p className="text-sm font-semibold text-red-900 text-center">Select a Week</p>
-                          <p className="text-xs text-red-700 text-center mt-1">
+                        <div className="p-3 border-b bg-gradient-to-r from-orange-100 to-amber-100">
+                          <p className="text-sm font-semibold text-orange-900 text-center">Select a Week</p>
+                          <p className="text-xs text-orange-700 text-center mt-1">
                             Click any day to select that week (Monday - Sunday)
                           </p>
                           {selectedWeekDate && (
-                            <div className="mt-2 p-2 bg-white rounded-md border border-red-200">
-                              <p className="text-xs font-medium text-center text-red-900">
+                            <div className="mt-2 p-2 bg-white rounded-md border border-orange-200">
+                              <p className="text-xs font-medium text-center text-orange-900">
                                 Currently: Week {getWeek(selectedWeekDate, { weekStartsOn: 1 })}
                               </p>
                             </div>
@@ -1032,7 +1032,7 @@ export default function DashboardPage() {
                       variant="outline"
                       size="sm"
                       onClick={goToNextWeek}
-                      className="px-2 hover:bg-blue-50 hover:border-blue-300"
+                      className="px-2 hover:bg-orange-50 hover:border-orange-300"
                       title="Next Week"
                     >
                       <ChevronRight className="h-4 w-4" />
@@ -1146,13 +1146,13 @@ export default function DashboardPage() {
                         variant="outline"
                         className={`flex-1 sm:w-auto justify-start text-left font-normal transition-all ${
                           selectedMonthDate
-                            ? "bg-red-50 border-red-300 hover:bg-red-100 text-red-900 shadow-sm"
+                            ? "bg-purple-50 border-purple-300 hover:bg-purple-100 text-purple-900 shadow-sm"
                             : "hover:bg-accent"
                         }`}
                       >
-                        <CalendarIcon className={`mr-2 h-4 w-4 ${selectedMonthDate ? "text-red-600" : ""}`} />
+                        <CalendarIcon className={`mr-2 h-4 w-4 ${selectedMonthDate ? "text-purple-600" : ""}`} />
                         {selectedMonthDate ? (
-                          <span className="font-semibold text-red-900">
+                          <span className="font-semibold text-purple-900">
                             {format(selectedMonthDate, 'MMMM yyyy')}
                           </span>
                         ) : (
@@ -1161,14 +1161,14 @@ export default function DashboardPage() {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 month-picker-popover" align="end">
-                      <div className="p-3 border-b bg-gradient-to-r from-red-50 to-red-100">
-                        <p className="text-sm font-semibold text-red-900 text-center">Select a Month</p>
-                        <p className="text-xs text-red-700 text-center mt-1">
+                      <div className="p-3 border-b bg-gradient-to-r from-purple-50 to-purple-100">
+                        <p className="text-sm font-semibold text-purple-900 text-center">Select a Month</p>
+                        <p className="text-xs text-purple-700 text-center mt-1">
                           Click any day to select that month
                         </p>
                         {selectedMonthDate && (
-                          <div className="mt-2 p-2 bg-white rounded-md border border-red-200">
-                            <p className="text-xs font-medium text-center text-red-900">
+                          <div className="mt-2 p-2 bg-white rounded-md border border-purple-200">
+                            <p className="text-xs font-medium text-center text-purple-900">
                               Currently: {format(selectedMonthDate, 'MMMM yyyy')}
                             </p>
                           </div>

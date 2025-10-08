@@ -457,3 +457,88 @@ button svg,
 /* Keep a pleasant default focus state for accessibility */
 a:focus, button:focus, .form-control:focus { outline: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent); }
 
+/* Enhanced Calendar View Styles */
+.rdp {
+  --rdp-accent-color: #3b82f6;
+  --rdp-background-color: #f3f4f6;
+  --rdp-accent-color-dark: #2563eb;
+  --rdp-background-color-dark: #374151;
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 2px solid var(--rdp-accent-color);
+}
+
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+  background-color: var(--rdp-accent-color) !important;
+  color: white !important;
+}
+
+.rdp-day:hover:not(.rdp-day_selected) {
+  background-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+.rdp-day_today {
+  font-weight: bold !important;
+  color: var(--rdp-accent-color) !important;
+  border: 2px solid var(--rdp-accent-color) !important;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #e5e7eb !important;
+}
+
+/* Weekly Calendar Styles */
+.rdp-week_selected {
+  background-color: #dbeafe !important;
+}
+
+.rdp-week_number {
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+}
+
+/* Monthly Calendar Styles */
+.month-picker-popover .rdp-month {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.month-picker-popover .rdp-day {
+  color: #374151 !important;
+}
+
+.month-picker-popover .rdp-day_selected {
+  background-color: #22c55e !important;
+  color: white !important;
+}
+
+.month-picker-popover .rdp-day_today {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+}
+
+/* Calendar Header Styles */
+.rdp-head_cell {
+  font-weight: 600 !important;
+  color: #4b5563 !important;
+}
+
+.rdp-nav_button {
+  color: #6b7280 !important;
+}
+
+.rdp-nav_button:hover {
+  background-color: #f3f4f6 !important;
+}
+
+/* Calendar Container Styles */
+.calendar-popover {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e5e7eb !important;
+}
+

@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -9,38 +9,46 @@ import LoginPage from "@/pages/login";
 import MenuPage from "@/pages/menu";
 import SearchPage from "@/pages/search";
 import PaymentPage from "@/pages/payment";
-
 import InvoicePage from "@/pages/invoice";
 import DashboardPage from "@/pages/dashboard";
 import AdminPage from "@/pages/admin";
 import InventoryPage from "@/pages/inventory";
+import { WarningProvider } from "@/lib/warningContext";
+import { WarningBanner } from "@/components/warning-banner";
 
 
 function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={SplashPage} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/admin" component={AdminPage} />
-      <Route path="/menu" component={MenuPage} />
-      <Route path="/search" component={SearchPage} />
-      <Route path="/payment" component={PaymentPage} />
+  const [location] = useLocation();
+  const showWarningBanner = location !== '/admin';
 
-      <Route path="/invoice" component={InvoicePage} />
-      <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/inventory" component={InventoryPage} />
-      <Route component={NotFound} />
-    </Switch>
+  return (
+    <>
+      {showWarningBanner && <WarningBanner />}
+      <Switch>
+        <Route path="/" component={SplashPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/menu" component={MenuPage} />
+        <Route path="/search" component={SearchPage} />
+        <Route path="/payment" component={PaymentPage} />
+        <Route path="/invoice" component={InvoicePage} />
+        <Route path="/dashboard" component={DashboardPage} />
+        <Route path="/inventory" component={InventoryPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <WarningProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </WarningProvider>
     </QueryClientProvider>
   );
 }
