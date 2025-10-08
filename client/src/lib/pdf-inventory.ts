@@ -33,16 +33,15 @@ export async function generateInventoryPDF(
   const pageWidth = doc.internal.pageSize.getWidth();
   
   // Header
-  doc.setFillColor(255, 152, 0); // Orange
-  doc.rect(0, 0, pageWidth, 40, 'F');
-  
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Catchymomos', 14, 20);
-  
-  doc.setFontSize(16);
-  doc.text('Inventory Report', 14, 32);
+ // Draw a thick red and black gradient header
+  const gradientSteps = 40;
+  for (let i = 0; i < gradientSteps; i++) {
+    const r = Math.round(255 - (255 - 0) * (i / gradientSteps)); // Red to Black
+    const g = Math.round(0 + (0 - 0) * (i / gradientSteps));
+    const b = Math.round(0 + (0 - 0) * (i / gradientSteps));
+    doc.setFillColor(r, g, b);
+    doc.rect(0, i, 210, 1, 'F');
+  }
   
   // Date and Time
   doc.setFontSize(10);

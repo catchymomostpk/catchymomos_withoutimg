@@ -704,14 +704,46 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="new-image">Image URL</Label>
-                  <Input
-                    id="new-image"
-                    value={newItem.image}
-                    onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-                    placeholder="Enter image URL"
-                    className="h-11"
-                  />
+                  <Label htmlFor="new-image">Image</Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id="new-image"
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const formData = new FormData();
+                          formData.append("image", file);
+                          try {
+                            const response = await apiRequest("POST", "/api/upload", formData, true);
+                            if (response.ok) {
+                              const data = await response.json();
+                              setNewItem({ ...newItem, image: data.url });
+                              toast({
+                                title: "Success",
+                                description: "Image uploaded successfully",
+                              });
+                            }
+                          } catch (error) {
+                            toast({
+                              title: "Error",
+                              description: "Failed to upload image",
+                              variant: "destructive",
+                            });
+                          }
+                        }
+                      }}
+                      className="h-11"
+                    />
+                    {newItem.image && (
+                      <img
+                        src={newItem.image}
+                        alt="Preview"
+                        className="h-11 w-11 object-cover rounded"
+                      />
+                    )}
+                  </div>
                 </div>
                 <div className="md:col-span-2 space-y-2">
                   <Label htmlFor="new-description">Description</Label>
@@ -829,14 +861,36 @@ export default function AdminPage() {
                         />
                       </td>
                       <td className="p-2">
-                        <img
-                          src={item.image || 'https://via.placeholder.com/100x100?text=No+Image'}
-                          alt={item.name || 'Menu item'}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
-                          }}
-                          className="w-12 h-12 object-cover rounded"
-                        />
+                        {editingItem?.id === item.id ? (
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="text"
+                              placeholder="Enter image URL"
+                              value={editingItem.image || ''}
+                              onChange={(e) => setEditingItem({ ...editingItem, image: e.target.value })}
+                              className="w-32"
+                            />
+                            {editingItem.image && (
+                              <img
+                                src={editingItem.image}
+                                alt="Preview"
+                                className="h-12 w-12 object-cover rounded"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
+                                }}
+                              />
+                            )}
+                          </div>
+                        ) : (
+                          <img
+                            src={item.image || 'https://via.placeholder.com/100x100?text=No+Image'}
+                            alt={item.name || 'Menu item'}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100x100?text=No+Image';
+                            }}
+                            className="w-12 h-12 object-cover rounded"
+                          />
+                        )}
                       </td>
                       <td className="p-2">
                         {editingItem?.id === item.id ? (
