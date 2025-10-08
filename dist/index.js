@@ -25,7 +25,7 @@ var MongoStorage = class {
   inventorySessions;
   inventoryItems;
   isConnected = false;
-  constructor(connectionString, databaseName = "chai-fi") {
+  constructor(connectionString, databaseName = "Catchymomos") {
     this.client = new MongoClient(connectionString);
     this.db = this.client.db(databaseName);
     this.users = this.db.collection("users");
@@ -58,9 +58,9 @@ var MongoStorage = class {
     if (!existingAdmin) {
       await this.createUser({ username: "admin", password: "admin@2020" });
     }
-    const existingUser = await this.users.findOne({ username: "Chai-fi" });
+    const existingUser = await this.users.findOne({ username: "Catchymomos" });
     if (!existingUser) {
-      await this.createUser({ username: "Chai-fi", password: "Chai-fi@2025" });
+      await this.createUser({ username: "Catchymomos", password: "Catchymomos@2025" });
     }
     const categoryCount = await this.categories.countDocuments();
     if (categoryCount === 0) {
@@ -97,70 +97,6 @@ var MongoStorage = class {
   }
   async initializeMenuItems() {
     const defaultItems = [
-      {
-        name: "Masala Chai",
-        description: "Traditional spiced tea",
-        price: "25.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Green Tea",
-        description: "Healthy herbal tea",
-        price: "30.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Cappuccino",
-        description: "Rich coffee with foam",
-        price: "80.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Black Coffee",
-        description: "Strong black coffee",
-        price: "50.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Samosa",
-        description: "Crispy fried snack",
-        price: "20.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Veg Sandwich",
-        description: "Fresh vegetable sandwich",
-        price: "60.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1509722747041-616f39b57569?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Orange Juice",
-        description: "Fresh squeezed orange",
-        price: "40.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Mango Lassi",
-        description: "Sweet yogurt drink",
-        price: "45.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
       // Mocktails
       {
         name: "Blue Mint Mojito",
@@ -880,70 +816,6 @@ var MemStorage = class {
   }
   async initializeMenuItems() {
     const defaultItems = [
-      {
-        name: "Masala Chai",
-        description: "Traditional spiced tea",
-        price: "25.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Green Tea",
-        description: "Healthy herbal tea",
-        price: "30.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Cappuccino",
-        description: "Rich coffee with foam",
-        price: "80.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Black Coffee",
-        description: "Strong black coffee",
-        price: "50.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Samosa",
-        description: "Crispy fried snack",
-        price: "20.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Veg Sandwich",
-        description: "Fresh vegetable sandwich",
-        price: "60.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1509722747041-616f39b57569?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Orange Juice",
-        description: "Fresh squeezed orange",
-        price: "40.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
-      {
-        name: "Mango Lassi",
-        description: "Sweet yogurt drink",
-        price: "45.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true
-      },
       // Mocktails
       {
         name: "Blue Mint Mojito",

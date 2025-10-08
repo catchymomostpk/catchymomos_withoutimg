@@ -20,7 +20,7 @@ const addHeader = (doc: jsPDF, title: string, subtitle?: string) => {
   doc.setTextColor(COLORS.white[0], COLORS.white[1], COLORS.white[2]);
   doc.setFontSize(28);
   doc.setFont("helvetica", "bold");
-  doc.text('Chai-Fi', 20, 25);
+  doc.text('Catchymomos', 20, 25);
   
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
@@ -55,8 +55,8 @@ const addFooter = (doc: jsPDF, yPosition: number) => {
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
-  doc.text('Thank you for choosing Chai-Fi!', 20, footerY);
-  doc.text('For support, contact us at support@chai-fi.com', 20, footerY + 6);
+  doc.text('Thank you for choosing Catchymomos!', 20, footerY);
+  doc.text('For support, contact us at support@Catchymomos', 20, footerY + 6);
   
   // Add timestamp
   const timestamp = new Date().toLocaleString();
@@ -179,7 +179,7 @@ export const generateInvoicePDF = async (transaction: Transaction) => {
   addFooter(doc, yPos);
   
   // Save the PDF
-  doc.save(`chai-fi-invoice-${transaction.id.slice(-8)}.pdf`);
+  doc.save(`Catchymomos-invoice-${transaction.id.slice(-8)}.pdf`);
 };
 
 export const generateDailySummaryPDF = async (summary: DailySummary, transactions: Transaction[]) => {
@@ -252,7 +252,7 @@ export const generateDailySummaryPDF = async (summary: DailySummary, transaction
   
   addFooter(doc, yPos);
   
-  doc.save(`chai-fi-daily-summary-${summary.date}.pdf`);
+  doc.save(`Catchymomos-daily-summary-${summary.date}.pdf`);
 };
 
 export const generateWeeklySummaryPDF = async (summary: WeeklySummary, transactions: Transaction[]) => {
@@ -325,7 +325,7 @@ export const generateWeeklySummaryPDF = async (summary: WeeklySummary, transacti
   
   addFooter(doc, yPos + 30);
   
-  doc.save(`chai-fi-weekly-summary-${summary.weekStart}.pdf`);
+  doc.save(`Catchymomos-weekly-summary-${summary.weekStart}.pdf`);
 };
 
 export const generateMonthlySummaryPDF = async (summary: MonthlySummary, transactions: Transaction[]) => {
@@ -425,5 +425,5 @@ export const generateMonthlySummaryPDF = async (summary: MonthlySummary, transac
   
   addFooter(doc, yPos + 10);
   
-  doc.save(`chai-fi-monthly-summary-${summary.month}.pdf`);
+  doc.save(`Catchymomos-monthly-summary-${summary.month}.pdf`);
 };

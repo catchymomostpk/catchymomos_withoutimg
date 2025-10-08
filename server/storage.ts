@@ -107,70 +107,7 @@ export class MemStorage implements IStorage {
 
   private async initializeMenuItems() {
     const defaultItems: InsertMenuItem[] = [
-      {
-        name: "Masala Chai",
-        description: "Traditional spiced tea",
-        price: "25.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Green Tea",
-        description: "Healthy herbal tea",
-        price: "30.00",
-        category: "Tea",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Cappuccino",
-        description: "Rich coffee with foam",
-        price: "80.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Black Coffee",
-        description: "Strong black coffee",
-        price: "50.00",
-        category: "Coffee",
-        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Samosa",
-        description: "Crispy fried snack",
-        price: "20.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Veg Sandwich",
-        description: "Fresh vegetable sandwich",
-        price: "60.00",
-        category: "Snacks",
-        image: "https://images.unsplash.com/photo-1509722747041-616f39b57569?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Orange Juice",
-        description: "Fresh squeezed orange",
-        price: "40.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
-      {
-        name: "Mango Lassi",
-        description: "Sweet yogurt drink",
-        price: "45.00",
-        category: "Beverages",
-        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
-        available: true,
-      },
+      
       // Mocktails
       {
         name: "Blue Mint Mojito",
